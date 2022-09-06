@@ -1,0 +1,12 @@
+syntax = "proto3";
+option go_package = "internal/userapp/v1";
+import "models.proto";
+message KindLoginRequest {
+  UserLoginModel spec = 1;
+}
+message KindLoginResponse {
+  int32 code = 1;
+  string message = 2;
+  UserModel data = 3;
+}
+

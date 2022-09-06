@@ -1,0 +1,11 @@
+syntax = "proto3";
+option go_package = "internal/userapp/v1";
+message UserModel {
+  int32 user_id = 1;
+  string user_name = 2;
+  string user_pass = 3;
+}
+message UserLoginModel {
+  string user_name = 1;
+  string user_pass = 2;
+}

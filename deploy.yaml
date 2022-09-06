@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mygo
+  namespace: cicd
+spec:
+  selector:
+    matchLabels:
+      app: mygo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mygo
+        version: v1.1
+    spec:
+      imagePullSecrets:
+        - name: aliyun
+      containers:
+        - name: mygo
+          image: registry.cn-beijing.aliyuncs.com/jtthinkweb/istioweb:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mygo-svc
+  namespace: cicd
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: mygo
+
+
