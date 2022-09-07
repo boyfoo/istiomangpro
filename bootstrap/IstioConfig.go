@@ -3,6 +3,7 @@ package bootstrap
 import (
 	"istio.io/client-go/pkg/informers/externalversions"
 	"istiomang/pkg/vs"
+	"k8s.io/client-go/dynamic"
 
 	istio "istio.io/client-go/pkg/clientset/versioned"
 	"k8s.io/apimachinery/pkg/util/wait"
@@ -39,6 +40,14 @@ func (*K8sConfig) K8sRestConfig() *rest.Config {
 func (this *K8sConfig) InitClient() *kubernetes.Clientset {
 
 	c, err := kubernetes.NewForConfig(this.K8sRestConfig())
+	if err != nil {
+		log.Fatal(err)
+	}
+	return c
+}
+
+func (this *K8sConfig) InitDynamicClient() dynamic.Interface {
+	c, err := dynamic.NewForConfig(this.K8sRestConfig())
 	if err != nil {
 		log.Fatal(err)
 	}
